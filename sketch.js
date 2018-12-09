@@ -16,7 +16,7 @@ function preload(){
   myImage = loadImage('./assets/mermaid2.png');
   myImage2 = loadImage('./assets/fish.png');
   myImage3 = loadImage('./assets/fish2.png');
-  mybackground = loadImage('/assets/underwater.jpg')
+  mybackground = loadImage('./assets/underwater.jpg');
   mySong = loadSound('./assets/Roglok_-_05_-_Radetzky_March_303.mp3');
 }
 
@@ -35,7 +35,7 @@ function draw() {
 
 
 //background
-background(mybackground, 0,0, myImage.width, myImage.height);
+backgroundImage(mybackground);
 
 //song
 var volume = 0;
@@ -71,28 +71,28 @@ amplitudeWave3();
 displayWave3();
 
 //mermaid
-image(myImage, width/2+volume/4, height/3+volume/10, myImage.width+volume/10, myImage.height+volume/10);
+image(myImage, width/2+volume/2, height/3+volume/4, myImage.width*0.7+volume/5, myImage.height*0.7+volume/5);
 //fish1
-image(myImage2, width/4-volume/2, height/2+volume/10, myImage2.width/8+volume/20, myImage2.height/8+volume/20);
+image(myImage2, width/3-volume, height/2+volume/3, myImage2.width/7+volume/12, myImage2.height/7+volume/12);
 //fish2
-image(myImage3, width/6+volume/4, height/3+volume/10, myImage3.width/30+volume/15, myImage3.height/30+volume/15);
+image(myImage3, width/5+volume/2, height/3+volume/3, myImage3.width/7+volume/7.5, myImage3.height/7+volume/7.5);
 
 //bubbles
-stroke(255);
+stroke(255,100);
 strokeWeight(2);
 fill(255,50);
-ellipse(width/8+volume,height/3+volume/30,volume/25);
-ellipse(width/15+volume/20,2*height/3+volume/5,volume/30);
-ellipse(width/10+volume,height-volume/5,volume/20);
-ellipse(4*width/5+volume/2,height/2-volume/4,volume/30);
-ellipse(3*width/4+volume/3,4*height/5+volume/2,volume/18);
-ellipse(width/2+volume,6*height/7+volume/30,volume/25);
+ellipse(width/8+volume,height/3+volume/15,volume/14);
+ellipse(width/15+volume/20,2*height/3+volume/5,volume/16);
+ellipse(width/10+volume,height-volume/5,volume/10);
+ellipse(4*width/5+volume/2,height/2-volume/4,volume/16);
+ellipse(3*width/4+volume/3,4*height/5+volume/2,volume/10);
+ellipse(width/2+volume,6*height/7+volume/15,volume/14);
 
 }
 
 function amplitudeWave() {
   var vol = analyzer.getLevel();
-  ang += vol/4;
+  ang += vol/2;
   var x = ang;
   //sin
   for (var a = 0; a < yvalues.length; a++) {
@@ -105,13 +105,13 @@ function displayWave() {
   noStroke();
   fill(255,200);
   for (var x = 0; x < yvalues.length; x++) {
-    ellipse(x*distance, height/5+yvalues[x], random(0,20), 10);
+    ellipse(x*distance, height/5+yvalues[x], random(0,14), 10);
   }
 }
 
 function amplitudeWave2() {
   var vol = analyzer.getLevel();
-  ang += vol/4;
+  ang += vol/2;
   var x = ang;
   //sin2
   for (var a = 0; a < yvalues.length; a++) {
@@ -130,7 +130,7 @@ function displayWave2() {
 
 function amplitudeWave3() {
   var vol = analyzer.getLevel();
-  ang += vol/3;
+  ang += vol;
   var x = ang;
   //sin2
   for (var a = 0; a < yvalues.length; a++) {
@@ -143,8 +143,17 @@ function displayWave3() {
   noStroke();
   fill(255,100);
   for (var x = 0; x < yvalues.length; x++) {
-    ellipse(x*distance, height/4+yvalues[x], random(0,40), random(0,40));
+    ellipse(x*distance, height/4+yvalues[x], random(0,25), random(0,25));
   }
+}
+
+function backgroundImage(mybackground) {
+  push();
+  translate(width/2,height/2);
+  imageMode(CENTER);
+  let scale = Math.max(width/mybackground.width,height/mybackground.height);
+  image(mybackground,0,0,mybackground.width*scale,mybackground.height*scale)
+  pop();
 }
 
 function windowResized() {
